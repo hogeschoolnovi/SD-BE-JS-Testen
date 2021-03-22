@@ -5,3 +5,7 @@ draaien van Spring Boot.
 
 De `PersonServiceImpl.java`- klasse heeft nog geen 100% coverage. Dat kan ook niet helemaal, maar de methode
 `createResponseObject` zou nog wel getest kunnen worden. Deze is echter `private`. Hoe zou jij de methode testen?
+
+## Postman
+Er in de folder __postman__ zit een bestand dat je zelf kunt importeren in Postman. Je kunt dan zo de Rest-endpoints
+checken.
