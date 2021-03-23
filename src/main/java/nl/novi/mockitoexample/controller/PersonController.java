@@ -55,6 +55,11 @@ public class PersonController {
         return personService.getPersonInfoById(id);
     }
 
+    @GetMapping()
+    public ResponseEntity<?> getAllUsers() {
+        return personService.getAllUsers();
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {

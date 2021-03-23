@@ -118,6 +118,11 @@ public class PersonServiceImpl implements PersonService {
         return ResponseEntity.ok(personResponse);
     }
 
+    @Override
+    public ResponseEntity<?> getAllUsers() {
+        return ResponseEntity.ok(personRepository.findAll());
+    }
+
     private PersonResponse createResponseObject(Person person) {
         PersonResponse personResponse = new PersonResponse(person.getId(),
                 person.getUsername(), person.getEmail());
