@@ -1,8 +1,10 @@
 package nl.novi.mockitoexample.service;
 
+import nl.novi.mockitoexample.domain.Person;
 import nl.novi.mockitoexample.payload.request.AddressRequest;
 import nl.novi.mockitoexample.payload.request.SignupRequest;
 import nl.novi.mockitoexample.payload.response.ErrorResponse;
+import nl.novi.mockitoexample.payload.response.PersonResponse;
 import nl.novi.mockitoexample.repository.PersonRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,7 +71,9 @@ class PersonServiceImplTest {
     @Test
     void nonUniqueUsernameShouldReturnError() {
         // Arrange
-        Mockito.when(personRepository.existsByUsername(signupRequest.getUsername())).thenReturn(true);
+        Mockito.when(personRepository
+                .existsByUsername(signupRequest.getUsername()))
+                .thenReturn(true);
 
         // Act
         ResponseEntity<?> responseEntity = personService.registerWithoutAddress(signupRequest);
@@ -99,11 +103,15 @@ class PersonServiceImplTest {
 
     @Test
     void nonUniqueUsernameAndEmailShouldReturnMultipleErrors() {
+
+        // Arrange
         Mockito.when(personRepository.existsByEmail(signupRequest.getEmail())).thenReturn(true);
         Mockito.when(personRepository.existsByUsername(signupRequest.getUsername())).thenReturn(true);
 
+        // Act
         ResponseEntity<?> responseEntity = personService.registerWithoutAddress(signupRequest);
 
+        //Assert
         Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
         Assertions.assertTrue(responseEntity.getBody() instanceof ErrorResponse);
         Assertions.assertEquals(2, ((ErrorResponse) responseEntity.getBody()).getErrors().size());
@@ -119,7 +127,9 @@ class PersonServiceImplTest {
 
         long id = 1L;
 
-        Mockito.when(personRepository.findById(id)).thenReturn(Optional.empty());
+        Mockito.when(
+                personRepository.findById(id))
+                .thenReturn(Optional.empty());
 
         ResponseEntity<?> responseEntity = personService.addAddressToUserById(id, addressRequest);
 
@@ -132,5 +142,29 @@ class PersonServiceImplTest {
         Assertions.assertEquals("The user with id (" + id + ") does not exist.",
                 ((ErrorResponse) responseEntity.getBody()).getErrors().get("id"));
     }
+
+    @Test
+    void searchingPersonByExistingIDShouldReturnPersonResponse() {
+//        Arrange
+        long id = 1L;
+        Person p = new Person();
+        p.setId(id);
+        p.setUsername("testperson");
+        p.setPassword("testpassword");
+        p.setEmail("test@test.nl");
+        p.setFirstName("Test");
+
+
+        Mockito.when(personRepository.findById(id))
+                .thenReturn(Optional.of(p));
+
+        ResponseEntity<?> responseEntity = personService.getPersonInfoById(id);
+
+        Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
+        Assertions.assertTrue(responseEntity.getBody() instanceof PersonResponse);
+        Assertions.assertEquals(p.getUsername(), ((PersonResponse) responseEntity.getBody()).getUsername());
+
+    }
+
 
 }
