@@ -62,6 +62,42 @@ class PersonControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 
+    // Leeg email
+    // Leeg username
+    // Leeg password en repeated password
+    // Uitdagend doen we een andere keer
 
+    @Test
+    void whenEmailIsEmpty_thenBadRequestReponse() throws Exception {
+        String userJson = "{" +
+                "    \"username\":\"nick\"," +
+                "    \"email\":\"\"," +
+                "    \"password\":\"nicknick\"," +
+                "    \"repeatedPassword\":\"nicknick\"" +
+                "}";
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/v1/user/register")
+            .content(userJson)
+            .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("email", Is.is("Email is mandatory")))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    // Leeg password en repeated password
+    @Test
+    void whenPasswordAndRepeatedPasswordAreEmpty_thenBadRequestResponseWithInfo() throws Exception {
+        String userJson = "{" +
+                "    \"username\":\"nick\"," +
+                "    \"email\":\"nick@nick.nl\"," +
+                "    \"password\":\"\"," +
+                "    \"repeatedPassword\":\"\"" +
+                "}";
+        mockMvc.perform(MockMvcRequestBuilders.post("/v1/user/register")
+                .content(userJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.password", Is.is("Password is mandatory")))
+                .andExpect(jsonPath("$.repeatedPassword", Is.is("Repeated Password is mandatory")))
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+    }
 
 }
