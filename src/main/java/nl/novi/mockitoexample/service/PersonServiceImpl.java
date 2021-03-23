@@ -64,7 +64,7 @@ public class PersonServiceImpl implements PersonService {
         person.setPassword(signupRequest.getPassword());
 
         if(errorResponse.hasErrors()) {
-            return ResponseEntity.status(500).body(errorResponse);
+            return ResponseEntity.status(400).body(errorResponse);
         }
 
         Person savedPerson = personRepository.save(person);
@@ -81,7 +81,7 @@ public class PersonServiceImpl implements PersonService {
         if(optionalPerson.isEmpty()) {
             ErrorResponse errorResponse = new ErrorResponse();
             errorResponse.addError("id", "The user with id (" + id + ") does not exist.");
-            return ResponseEntity.status(500).body(errorResponse);
+            return ResponseEntity.status(400).body(errorResponse);
         }
 
         Person personWithAddress = optionalPerson.get();
@@ -108,7 +108,7 @@ public class PersonServiceImpl implements PersonService {
 
         if(optionalPerson.isEmpty()) {
             errorResponse.addError("id", "The user with id (" + id + ") does not exist.");
-            return ResponseEntity.status(500).body(errorResponse);
+            return ResponseEntity.status(400).body(errorResponse);
         }
         
         Person person = optionalPerson.get();
