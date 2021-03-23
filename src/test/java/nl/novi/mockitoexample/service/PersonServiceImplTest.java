@@ -58,7 +58,7 @@ class PersonServiceImplTest {
         ResponseEntity<?> responseEntity = personService.registerWithoutAddress(signupRequest);
 
         // Assert
-        Assertions.assertEquals(500, responseEntity.getStatusCodeValue());
+        Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
         Assertions.assertTrue(responseEntity.getBody() instanceof ErrorResponse);
         Assertions.assertEquals(1, ((ErrorResponse) responseEntity.getBody()).getErrors().size());
         Assertions.assertTrue(((((ErrorResponse) responseEntity.getBody()).getErrors()).containsKey("repeatedPassword")));
@@ -75,7 +75,7 @@ class PersonServiceImplTest {
         ResponseEntity<?> responseEntity = personService.registerWithoutAddress(signupRequest);
 
         // Assert
-        Assertions.assertEquals(500, responseEntity.getStatusCodeValue());
+        Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
         Assertions.assertTrue(responseEntity.getBody() instanceof ErrorResponse);
         Assertions.assertEquals(1, ((ErrorResponse) responseEntity.getBody()).getErrors().size());
 
@@ -89,7 +89,7 @@ class PersonServiceImplTest {
 
         ResponseEntity<?> responseEntity = personService.registerWithoutAddress(signupRequest);
 
-        Assertions.assertEquals(500, responseEntity.getStatusCodeValue());
+        Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
         Assertions.assertTrue(responseEntity.getBody() instanceof ErrorResponse);
         Assertions.assertEquals(1, ((ErrorResponse) responseEntity.getBody()).getErrors().size());
 
@@ -104,7 +104,7 @@ class PersonServiceImplTest {
 
         ResponseEntity<?> responseEntity = personService.registerWithoutAddress(signupRequest);
 
-        Assertions.assertEquals(500, responseEntity.getStatusCodeValue());
+        Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
         Assertions.assertTrue(responseEntity.getBody() instanceof ErrorResponse);
         Assertions.assertEquals(2, ((ErrorResponse) responseEntity.getBody()).getErrors().size());
 
@@ -123,7 +123,7 @@ class PersonServiceImplTest {
 
         ResponseEntity<?> responseEntity = personService.addAddressToUserById(id, addressRequest);
 
-        Assertions.assertEquals(500, responseEntity.getStatusCodeValue());
+        Assertions.assertEquals(400, responseEntity.getStatusCodeValue());
         Assertions.assertTrue(responseEntity.getBody() instanceof ErrorResponse);
         Assertions.assertEquals(1, ((ErrorResponse) responseEntity.getBody()).getErrors().size());
 

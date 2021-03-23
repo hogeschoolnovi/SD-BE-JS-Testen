@@ -10,4 +10,5 @@ public interface PersonService {
     ResponseEntity<?> registerWithoutAddress(SignupRequest signupRequest);
     ResponseEntity<?> addAddressToUserById(long id, AddressRequest addressRequest);
     ResponseEntity<?> getPersonInfoById(long id);
+    ResponseEntity<?> getAllUsers();
 }
